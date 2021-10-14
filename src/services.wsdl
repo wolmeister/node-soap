@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="EventService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:3000/wsdl?wsdl" targetNamespace="http://localhost:3000/wsdl?wsdl">
+  <!-- MESSAGES: defines the data being exchanged between the service and client -->
+  <message name="AddEventRequest">
+    <part name="name" minOccurs="1" maxOccurs="1" type="xsd:string" />
+    <part name="location" type="xsd:string" />
+  </message>
+  <message name="AddEventResponse">
+    <part name="id" type="xsd:string" />
+    <part name="name" type="xsd:string" />
+    <part name="location" type="xsd:string" />
+  </message>
+  <!-- PORT TYPES: defines the complete communication operation (one way/round trip) -->
+  <portType name="EventPort">
+    <operation name="addEvent">
+      <input message="tns:AddEventRequest" />
+      <output message="tns:AddEventResponse" />
+    </operation>
+  </portType>
+  <!-- BINDING: provides details on how a portType operation will actually be transmitted -->
+  <binding name="EventBinding" type="tns:EventPort">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="addEvent">
+      <soap:operation soapAction="addEvent" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <!-- SERVICE:  -->
+  <service name="EventService">
+    <documentation>WSDL File for EventService</documentation>
+    <port binding="tns:EventBinding" name="EventPort">
+      <soap:address location="http://localhost:3000/wsdl" />
+    </port>
+  </service>
+</definitions>
